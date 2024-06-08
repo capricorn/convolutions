@@ -69,11 +69,14 @@ if __name__ == '__main__':
     # Next, compute the distances between them
     dist = dict()
     edges = n2(conv3)
-    edge_graph = graph(edges)
+    #edge_graph = graph(edges)
+    edge_graph = graph(conv3)
 
+    # bidirectional so may need permutations instead
     for edge in edges:
         start, end = edge
         dist[edge] = conv_dist(start, end)
+        dist[(end,start)] = conv_dist(end,start)
 
     start_edge = min(dist, key=lambda key: dist[key])
     print(start_edge)
@@ -85,17 +88,27 @@ if __name__ == '__main__':
     # Should it be minimizes total distance or average distance?
     # Again, review graph approach
 
-    #path = [start_edge[0]]
+    path = [start_edge[0]]
+    start_node = start_edge[0]
     while True:
-        next_edge = [ n for n in edge_graph[start_edge] if n[1] not in visited ]
+        # TODO: Edge graph should just be reachable vertices, not edges themselves
+        # All reachable nodes not yet visited
+        next_edge = [ n for n in edge_graph[start_node] if n not in visited ]
         if next_edge == []:
             break
 
-        next_edge = min(next_edge, key=lambda key: dist[key])
-        print(next_edge, conv_dist(*next_edge))
-        #path.append(next_edge)
+        possible_edges = [ (start_node, n) for n in next_edge ]
+        next_edge = min(possible_edges, key=lambda key: dist[key])
+        print(f'{next_edge[0]}->{next_edge[1]} ({conv_dist(*next_edge)})')
+        #print(f'{start_edge[0]}->{next_edge[1]}')
+        #print(next_edge, conv_dist(*next_edge))
+        path.append(next_edge[1])
         visited.add(next_edge[1])
-        start_edge = next_edge
+        #start_edge = next_edge
+        start_node = next_edge[1]
 
-    #print(path)
+    print(path)
+    # TODO: Color (get color lib, setup poetry)  
+    for i,j,k in path:
+        print("a"*i + "b"*j + "c"*k)
     # TODO: Generate strings as example
