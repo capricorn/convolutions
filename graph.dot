@@ -1,5 +1,6 @@
 graph {
     layout="circo"
+    label="k=2, n=10"
 
     
     "(0, 10)" -- "(1, 9)"
