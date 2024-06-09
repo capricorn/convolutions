@@ -1,4 +1,5 @@
 import sys
+import colorful as cf
 # Idea, writeup:
 # Recursive combinatorics? (Show equivalence, recurrence relations?)
 # Start with implementation of n choose 2, then generalize
@@ -108,7 +109,6 @@ if __name__ == '__main__':
         start_node = next_edge[1]
 
     print(path)
-    # TODO: Color (get color lib, setup poetry)  
+    # TODO: No need for graph; just iterate set of nodes and remove as you visit
     for i,j,k in path:
-        print("a"*i + "b"*j + "c"*k)
-    # TODO: Generate strings as example
+        print(f'{cf.red("a"*i)}' + f'{cf.green("b"*j)}' + f'{cf.blue("c"*k)}')
