@@ -1,0 +1,7 @@
+graph {
+    layout="circo"
+
+    {% for edge in edges %}
+    "{{edge[0]}}" -- "{{edge[1]}}"
+    {% endfor %}
+}
