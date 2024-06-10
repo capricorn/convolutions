@@ -1,4 +1,6 @@
 import sys
+from typing import List, Tuple
+
 import colorful as cf
 # Idea, writeup:
 # Recursive combinatorics? (Show equivalence, recurrence relations?)
@@ -65,8 +67,9 @@ def convolutions(k, k_sum):
 # Keep track of visited nodes; keep selecting the minimum until no nodes can be visited.
 # That should provide an order of listing convolutions that minimizes the hamming distances.
 
-if __name__ == '__main__':
-    conv3 = convolutions(3, 10)
+def shortest_path(n,k) -> List[Tuple[int]]:
+    # TODO: Rename
+    conv3 = convolutions(k,n)
     # Next, compute the distances between them
     dist = dict()
     edges = n2(conv3)
@@ -107,8 +110,15 @@ if __name__ == '__main__':
         visited.add(next_edge[1])
         #start_edge = next_edge
         start_node = next_edge[1]
+    
+    # TODO: Return path
+    return path
 
-    print(path)
+if __name__ == '__main__':
+    path = shortest_path(10, 3)
+
+    #print(path)
     # TODO: No need for graph; just iterate set of nodes and remove as you visit
+
     for i,j,k in path:
         print(f'{cf.red("a"*i)}' + f'{cf.green("b"*j)}' + f'{cf.blue("c"*k)}')
