@@ -1,0 +1,15 @@
+graph {
+    layout="circo"
+    label="k={{k}}, n={{n}}"
+
+    "{{start_node}}" [shape="box", label="START {{start_node}}"]
+    "{{end_node}}" [shape="box", label="END {{end_node}}"]
+
+    {% for i, edge in edges %}
+    {% if edge in shortest_path %}
+    "{{edge[0]}}" -- "{{edge[1]}}" [color="#ff0000"]
+    {% else %}
+    "{{edge[0]}}" -- "{{edge[1]}}" [color="#00000040"]
+    {% endif %}
+    {% endfor %}
+}

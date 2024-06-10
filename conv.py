@@ -83,7 +83,7 @@ def shortest_path(n,k) -> List[Tuple[int]]:
         dist[(end,start)] = conv_dist(end,start)
 
     start_edge = min(dist, key=lambda key: dist[key])
-    print(start_edge)
+    #print(start_edge)
     visited = set([start_edge[0]])
 
     # TODO: How large is the edge graph? (wrt convolutions)
@@ -103,7 +103,7 @@ def shortest_path(n,k) -> List[Tuple[int]]:
 
         possible_edges = [ (start_node, n) for n in next_edge ]
         next_edge = min(possible_edges, key=lambda key: dist[key])
-        print(f'{next_edge[0]}->{next_edge[1]} ({conv_dist(*next_edge)})')
+        #print(f'{next_edge[0]}->{next_edge[1]} ({conv_dist(*next_edge)})')
         #print(f'{start_edge[0]}->{next_edge[1]}')
         #print(next_edge, conv_dist(*next_edge))
         path.append(next_edge[1])
