@@ -121,9 +121,11 @@ if __name__ == '__main__':
     #print(path)
     # TODO: No need for graph; just iterate set of nodes and remove as you visit
 
-    for i,j,k in path:
-        print(f'{cf.red("a"*i)}' + f'{cf.green("b"*j)}' + f'{cf.blue("c"*k)}')
+    for min_conv, trad_conv in zip(path, convs):
+        mi, mj, mk = min_conv
+        ti, tj, tk = trad_conv
 
-    print(len(convs))
-    print(len(path))
-    print(path)
+        min_conv_str = f'{cf.red("a"*mi)}' + f'{cf.green("b"*mj)}' + f'{cf.blue("c"*mk)}'
+        trad_conv_str = f'{cf.red("a"*ti)}' + f'{cf.green("b"*tj)}' + f'{cf.blue("c"*tk)}'
+
+        print(min_conv_str + '\t' + trad_conv_str)

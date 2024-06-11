@@ -3,8 +3,8 @@ from jinja2 import Template
 import conv
 
 if __name__ == '__main__':
-    k = 3
-    n = 5
+    k = 2
+    n = 10
     all_convs = conv.convolutions(k,n)
     edges = conv.n2(all_convs)
 
