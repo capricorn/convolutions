@@ -7,9 +7,9 @@ graph {
 
     {% for i, edge in edges %}
     {% if edge in shortest_path %}
-    "{{edge[0]}}" -- "{{edge[1]}}" [color="#ff0000"]
+    "{{make_edge(edge)[0]}}" -- "{{make_edge(edge)[1]}}" [color="#ff0000"]
     {% else %}
-    "{{edge[0]}}" -- "{{edge[1]}}" [color="#00000040"]
+    "{{make_edge(edge)[0]}}" -- "{{make_edge(edge)[1]}}" [color="#00000040"]
     {% endif %}
     {% endfor %}
 }

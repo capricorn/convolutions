@@ -115,10 +115,15 @@ def shortest_path(n,k) -> List[Tuple[int]]:
     return path
 
 if __name__ == '__main__':
-    path = shortest_path(10, 3)
+    convs = convolutions(3,5)
+    path = shortest_path(5, 3)
 
     #print(path)
     # TODO: No need for graph; just iterate set of nodes and remove as you visit
 
     for i,j,k in path:
         print(f'{cf.red("a"*i)}' + f'{cf.green("b"*j)}' + f'{cf.blue("c"*k)}')
+
+    print(len(convs))
+    print(len(path))
+    print(path)
