@@ -2,15 +2,20 @@ import sys
 from typing import List, Tuple
 
 import colorful as cf
-# Idea, writeup:
-# Recursive combinatorics? (Show equivalence, recurrence relations?)
-# Start with implementation of n choose 2, then generalize
-# Title, "Recursive Combinatorics I", then "II", etc
+def trad_conv3_ex(l):
+    results = []
+    for i in range(0,l+1):
+        for j in range(0,l-i+1):
+            results.append((i,j,l-i-j))
 
-# Nb. should be able to generate larger by combining n2, n3, etc 
-# (That is, each just generates pairs of a given size and then all
-# are combined. So that can be parameterized..
-# TODO: Recursive convolution?
+    return results
+
+def convolutions2(l):
+    results = []
+    for i in range(0,l+1):
+        results.append((i,l-i))
+    return results
+
 # Generate combinations of n=2
 def n2(l):
     if len(l) == 2:
@@ -22,13 +27,6 @@ def n2(l):
     pairs = [ (item,i) for i in remainder ]
 
     return [ *pairs, *n2(remainder) ]
-
-# Given n2, what next?
-# 1. Write func to generate convolutions (tuples)
-# 2. Implement hamming dist func on tuples
-# 3. Build graph (hashtable w/ neighbors incl. distance as pair)
-#   nb. every node is considered a neighbor; order st it minimizes total
-# TODO: Draw complete graph of convolutions?
 
 # Fully complete graph
 def graph(l):
@@ -62,11 +60,6 @@ def convolutions(k, k_sum):
 
     return results
 
-# Finally, using the graph over convolutions, compute the distance of all edges.
-# This will be a simple hashtable.
-# Keep track of visited nodes; keep selecting the minimum until no nodes can be visited.
-# That should provide an order of listing convolutions that minimizes the hamming distances.
-
 def shortest_path(n,k) -> List[Tuple[int]]:
     # TODO: Rename
     conv3 = convolutions(k,n)
@@ -85,12 +78,6 @@ def shortest_path(n,k) -> List[Tuple[int]]:
     start_edge = min(dist, key=lambda key: dist[key])
     #print(start_edge)
     visited = set([start_edge[0]])
-
-    # TODO: How large is the edge graph? (wrt convolutions)
-    # TODO: Is this provably the best? 
-    # TODO: Counting convolutions (parameterized by k, sum)
-    # Should it be minimizes total distance or average distance?
-    # Again, review graph approach
 
     path = [start_edge[0]]
     start_node = start_edge[0]
@@ -114,12 +101,26 @@ def shortest_path(n,k) -> List[Tuple[int]]:
     # TODO: Return path
     return path
 
+def minimum_conv2_path(n) -> List[Tuple[int]]:
+    conv = convolutions2(n)
+    curr_node = (0,n)
+    visited = set([curr_node])
+    path = [curr_node]
+
+    while True:
+        neighbor_nodes = [ n for n in conv if n not in visited ]
+        if neighbor_nodes == []:
+            break
+
+        curr_node = min(neighbor_nodes, key=lambda n: conv_dist(curr_node,n))
+        path.append(curr_node)
+        visited.add(curr_node)
+    
+    return path
+
 if __name__ == '__main__':
     convs = convolutions(3,5)
     path = shortest_path(5, 3)
-
-    #print(path)
-    # TODO: No need for graph; just iterate set of nodes and remove as you visit
 
     for min_conv, trad_conv in zip(path, convs):
         mi, mj, mk = min_conv
